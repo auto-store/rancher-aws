@@ -1,5 +1,5 @@
 provider "rancher2" {
-  api_url    = data.terraform_remote_state.["https://${aws_instance.rancherserver.public_ip}"]
+  api_url    = data.terraform_remote_state.server.outputs.rancher-url
   access_key = var.rancher2_access_key
   secret_key = var.rancher2_secret_key
 }
@@ -15,9 +15,9 @@ data "terraform_remote_state" "server" {
   }
 }
 
-variable "aws_access" {}
+variable "rancher2_access_key" {}
 
-variable "aws_secret" {}
+variable "rancher2_secret_key" {}
 
 variable "cluster_name" {}
 
@@ -40,9 +40,9 @@ resource "rancher2_node_template" "template" {
   amazonec2_config {
     access_key = var.aws_access
     secret_key = var.aws_secret
-    ami = data.terraform_remote_state.server.ami
+    ami = data.terraform_remote_state.server.outputs.ami
     region = var.template_region
-    security_group = data.terraform_remote_state.outputs.server.security_group
+    security_group = data.terraform_remote_state.server.outputs.security_group
   }
 }
 # Create a new rancher2 Node Pool

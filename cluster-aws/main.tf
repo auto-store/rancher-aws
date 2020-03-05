@@ -49,6 +49,8 @@ resource "rancher2_node_template" "template" {
     ami = data.terraform_remote_state.server.outputs.ami
     region = var.template_region
     security_group = data.terraform_remote_state.server.outputs.security_group
+    vpc_id = data.terraform_remote_state.network-aws.outputs.vpc_id
+    subnet = data.terraform_remote_state.network-aws.outputs.subnet_id
   }
 }
 # Create a new rancher2 Node Pool

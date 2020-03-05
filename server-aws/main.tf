@@ -272,3 +272,6 @@ output "rancher-url" {
   value = ["https://${aws_instance.rancherserver.public_ip}"]
 }
 
+output "security_group" {
+  value = [aws_security_group.rancher_sg_allowall.name]
+}

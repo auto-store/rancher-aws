@@ -53,10 +53,10 @@ resource "rancher2_node_template" "template" {
 }
 # Create a new rancher2 Node Pool
 resource "rancher2_node_pool" "pool" {
-  cluster_id =  data.rancher2_cluster.cluster.id
+  cluster_id =  [rancher2_cluster.cluster.id]
   name = var.pool_name 
   hostname_prefix =  "foo-cluster-0"
-  node_template_id = data.rancher2_node_template.template.id
+  node_template_id = [rancher2_node_template.template.id]
   quantity = 3
   control_plane = true
   etcd = true

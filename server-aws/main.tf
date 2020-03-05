@@ -275,3 +275,7 @@ output "rancher-url" {
 output "security_group" {
   value = [aws_security_group.rancher_sg_allowall.name]
 }
+
+output "ami" {
+  value = data.aws_ami.ubuntu.id
+}

@@ -9,6 +9,8 @@ resource "aws_vpc" "tharris_vpc" {
 resource "aws_subnet" "cluster_subnet" {
   vpc_id     = [aws_vpc.tharris_vpc.id]
   cidr_block = "10.50.0.0/24"
+
+  depends_on = [aws_vpc.tharris_vpc]
 }
 
 output "vpc_id" {

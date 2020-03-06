@@ -18,8 +18,17 @@ data "terraform_remote_state" "network-aws" {
   }
 }
 
+data "terraform_remote_state" "credentials" {
+  backend = "remote"
+  config = {
+    organization = "demo-env"
+    workspaces = {
+      name = "rancher-creds"
+    }
+  }
+}
+
 provider "rancher2" {
-  api_url = data.terraform_remote_state.server.outputs.rancher-url
   access_key = var.rancher2_access_key
   secret_key = var.rancher2_secret_key
 }
@@ -53,7 +62,7 @@ resource "rancher2_cluster" "cluster" {
 resource "rancher2_node_template" "template" {
   name = "base_template"
   description = "new template"
-  cloud_credential_id = []
+  cloud_credential_id = data.terraform_remote_state.output.aws_credentials.id
   amazonec2_config {
     ami = data.terraform_remote_state.server.outputs.ami
     region = var.template_region
@@ -65,10 +74,10 @@ resource "rancher2_node_template" "template" {
 }
 # Create a new rancher2 Node Pool
 resource "rancher2_node_pool" "pool" {
-  cluster_id =  [rancher2_cluster.cluster.id]
+  cluster_id =  rancher2_cluster.cluster.id
   name = var.pool_name 
   hostname_prefix =  "foo-cluster-0"
-  node_template_id = [rancher2_node_template.template.id]
+  node_template_id = rancher2_node_template.template.id
   quantity = 3
   control_plane = true
   etcd = true

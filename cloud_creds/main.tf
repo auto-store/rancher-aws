@@ -21,3 +21,15 @@ resource "rancher2_cloud_credential" "aws_cluster" {
     secret_key = var.aws_secret 
   }
 }
+
+resource "rancher2_cloud_credential" "aws_credentials.id" {
+  name = "aws_cluster"
+  amazonec2_credential_config {
+    access_key = var.aws_access
+    secret_key = var.aws_secret 
+  }
+}
+
+output "aws_credentials" {
+  value = [rancher2_cloud_credential.aws_credentials.id]
+}

@@ -31,6 +31,7 @@ data "terraform_remote_state" "credentials" {
 provider "rancher2" {
   access_key = var.rancher2_access_key
   secret_key = var.rancher2_secret_key
+  api_url = data.terraform_remote_state.server.outputs.rancher-url[0]
 }
 
 
@@ -47,6 +48,10 @@ variable "aws_access" {}
 variable "aws_secret" {}
 
 variable "template_region" {}
+
+variable "hostname_prefix {
+  default = k8-cluster
+}"
 
 
 resource "rancher2_cluster" "cluster" {
@@ -76,7 +81,7 @@ resource "rancher2_node_template" "template" {
 resource "rancher2_node_pool" "pool" {
   cluster_id =  rancher2_cluster.cluster.id
   name = var.pool_name 
-  hostname_prefix =  "foo-cluster-0"
+  hostname_prefix =  var.hostname_prefix
   node_template_id = rancher2_node_template.template.id
   quantity = 3
   control_plane = true

@@ -8,7 +8,9 @@ data "terraform_remote_state" "server" {
   }
 }
 
-provider "rancher2" {}
+provider "rancher2" {
+  api_url = data.terraform_remote_state.server.outputs.rancher-url[0]
+}
 
 variable "aws_access" {}
 
@@ -18,7 +20,8 @@ resource "rancher2_cloud_credential" "aws_cluster" {
   name = "aws_cluster"
   amazonec2_credential_config {
     access_key = var.aws_access
-    secret_key = var.aws_secret 
+    secret_key = var.aws_secret
+    
   }
 }
 

@@ -29,6 +29,6 @@ output "vpc_id" {
 }
 
 output "subnet_id" {
-    value = [aws_subnet.cluster_subnet.id]
+    value = [aws_default_subnet.cluster_subnet.id]
 }
   

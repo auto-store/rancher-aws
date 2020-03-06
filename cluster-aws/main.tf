@@ -50,7 +50,7 @@ variable "aws_secret" {}
 variable "template_region" {}
 
 variable "hostname_prefix {
-  default = k8-cluster
+  default = "k8-cluster"
 }
 
 

@@ -51,7 +51,7 @@ variable "template_region" {}
 
 variable "hostname_prefix {
   default = k8-cluster
-}"
+}
 
 
 resource "rancher2_cluster" "cluster" {

@@ -49,9 +49,7 @@ variable "aws_secret" {}
 
 variable "template_region" {}
 
-variable "hostname_prefix {
-  default = "k8-cluster"
-}
+variable "hostname_prefix {}
 
 
 resource "rancher2_cluster" "cluster" {

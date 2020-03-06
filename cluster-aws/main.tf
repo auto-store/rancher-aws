@@ -8,13 +8,6 @@ data "terraform_remote_state" "server" {
   }
 }
 
-provider "rancher2" {
-  api_url = data.terraform_remote_state.server.outputs.rancher-url
-  access_key = var.rancher2_access_key
-  secret_key = var.rancher2_secret_key
-}
-
-
 data "terraform_remote_state" "network-aws" {
   backend = "remote"
   config = {
@@ -24,6 +17,13 @@ data "terraform_remote_state" "network-aws" {
     }
   }
 }
+
+provider "rancher2" {
+  api_url = data.terraform_remote_state.server.outputs.rancher-url
+  access_key = var.rancher2_access_key
+  secret_key = var.rancher2_secret_key
+}
+
 
 variable "rancher2_access_key" {}
 
@@ -53,9 +53,8 @@ resource "rancher2_cluster" "cluster" {
 resource "rancher2_node_template" "template" {
   name = "base_template"
   description = "new template"
+  cloud_credential_id = []
   amazonec2_config {
-    access_key = var.aws_access
-    secret_key = var.aws_secret
     ami = data.terraform_remote_state.server.outputs.ami
     region = var.template_region
     security_group = data.terraform_remote_state.server.outputs.security_group

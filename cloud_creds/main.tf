@@ -8,9 +8,7 @@ data "terraform_remote_state" "server" {
   }
 }
 
-provider "rancher2" {
-  api_url    = data.terraform_remote_state.server.outputs.rancher-url
-}
+provider "rancher2" {}
 
 variable "aws_access" {}
 

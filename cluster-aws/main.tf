@@ -69,7 +69,7 @@ resource "rancher2_node_template" "template" {
     security_group = data.terraform_remote_state.server.outputs.security_group
     vpc_id = data.terraform_remote_state.network-aws.outputs.vpc_id[0]
     subnet_id = data.terraform_remote_state.network-aws.outputs.subnet_id[0]
-    zone = "eu-west-2a"
+    zone = "a"
   }
 }
 # Create a new rancher2 Node Pool

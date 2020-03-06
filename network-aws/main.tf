@@ -25,8 +25,8 @@ resource "aws_default_subnet" "default" {
 #
 
 output "vpc_id" {
+   value = [aws_default_vpc.default.id]
 }
-    value = [aws_default_vpc.default.id]
 
 output "subnet_id" {
     value = [aws_subnet.cluster_subnet.id]

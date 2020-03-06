@@ -62,7 +62,7 @@ resource "rancher2_cluster" "cluster" {
 resource "rancher2_node_template" "template" {
   name = "base_template"
   description = "new template"
-  cloud_credential_id = data.terraform_remote_state.output.aws_credentials.id
+  cloud_credential_id = data.terraform_remote_state.aws_credentials.outputs.id
   amazonec2_config {
     ami = data.terraform_remote_state.server.outputs.ami
     region = var.template_region

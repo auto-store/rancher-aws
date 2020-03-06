@@ -1,5 +1,4 @@
 provider "rancher2" {
-  api_url    = "${data.terraform_remote_state.server.outputs.rancher-url}"
   access_key = var.rancher2_access_key
   secret_key = var.rancher2_secret_key
 }
@@ -11,6 +10,16 @@ data "terraform_remote_state" "server" {
     organization = "demo-env"
     workspaces = {
       name = "rancher-server-aws"
+    }
+  }
+}
+
+data "terraform_remote_state" "network-aws" {
+  backend = "remote"
+  config = {
+    organization = "demo-env"
+    workspaces = {
+      name = "rancher-network-aws"
     }
   }
 }

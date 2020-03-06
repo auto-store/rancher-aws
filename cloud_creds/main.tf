@@ -1,7 +1,3 @@
-provider "rancher2" {
-  api_url    = "${data.terraform_remote_state.server.outputs.rancher-url}"
-}
-
 data "terraform_remote_state" "server" {
   backend = "remote"
   config = {
@@ -10,6 +6,10 @@ data "terraform_remote_state" "server" {
       name = "rancher-server-aws"
     }
   }
+}
+
+provider "rancher2" {
+  api_url    = "${data.terraform_remote_state.server.outputs.rancher-url}"
 }
 
 variable "aws_access" {}

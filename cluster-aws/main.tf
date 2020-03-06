@@ -1,9 +1,3 @@
-provider "rancher2" {
-  access_key = var.rancher2_access_key
-  secret_key = var.rancher2_secret_key
-}
-
-
 data "terraform_remote_state" "server" {
   backend = "remote"
   config = {
@@ -13,6 +7,13 @@ data "terraform_remote_state" "server" {
     }
   }
 }
+
+provider "rancher2" {
+  api_url = data.terraform_remote_state.server.rancher-url
+  access_key = var.rancher2_access_key
+  secret_key = var.rancher2_secret_key
+}
+
 
 data "terraform_remote_state" "network-aws" {
   backend = "remote"

@@ -22,7 +22,7 @@ resource "rancher2_cloud_credential" "aws_cluster" {
   }
 }
 
-resource "rancher2_cloud_credential" "aws_credentials.id" {
+resource "rancher2_cloud_credential" "aws_credentials" {
   name = "aws_cluster"
   amazonec2_credential_config {
     access_key = var.aws_access

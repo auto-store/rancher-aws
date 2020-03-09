@@ -31,7 +31,6 @@ data "terraform_remote_state" "credentials" {
 provider "rancher2" {
   access_key = var.rancher2_access_key
   secret_key = var.rancher2_secret_key
-  api_url = data.terraform_remote_state.server.outputs.rancher-url[0]
 }
 
 

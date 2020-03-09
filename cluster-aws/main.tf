@@ -76,7 +76,7 @@ resource "rancher2_node_template" "template" {
   }
 }
 # Create a new rancher2 Node Pool
-resource "rancher2_node_pool" "pool" {
+resource "rancher2_node_pool" "control_plane_pool" {
   cluster_id =  rancher2_cluster.cluster.id
   name = var.pool_name 
   hostname_prefix =  var.hostname_prefix
@@ -84,5 +84,16 @@ resource "rancher2_node_pool" "pool" {
   quantity = 3
   control_plane = true
   etcd = true
+  worker = false 
+}
+
+resource "rancher2_node_pool" "worker_pool" {
+  cluster_id =  rancher2_cluster.cluster.id
+  name = var.pool_name 
+  hostname_prefix =  var.hostname_prefix
+  node_template_id = rancher2_node_template.template.id
+  quantity = 3
+  control_plane = false
+  etcd = false 
   worker = true
 }
